@@ -310,6 +310,7 @@ def OMP_Critical : Directive<"critical"> {
     VersionedClause<OMPC_Hint>
   ];
 }
+def OMP_Hello : Directive<"hello"> {}
 def OMP_TaskYield : Directive<"taskyield"> {}
 def OMP_Barrier : Directive<"barrier"> {}
 def OMP_TaskWait : Directive<"taskwait"> {}

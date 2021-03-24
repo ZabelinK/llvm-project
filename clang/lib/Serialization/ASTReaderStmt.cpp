@@ -2484,6 +2484,13 @@ void ASTStmtReader::VisitOMPScanDirective(OMPScanDirective *D) {
   VisitOMPExecutableDirective(D);
 }
 
+void ASTStmtReader::VisitOMPHelloDirective(OMPHelloDirective *D) {
+  VisitStmt(D);
+  // The NumClauses field was read in ReadStmtFromStream.
+  Record.skipInts(1);
+  VisitOMPExecutableDirective(D);
+}
+
 void ASTStmtReader::VisitOMPOrderedDirective(OMPOrderedDirective *D) {
   VisitStmt(D);
   // The NumClauses field was read in ReadStmtFromStream.
@@ -2809,6 +2816,11 @@ Stmt *ASTReader::ReadStmtFromStream(ModuleFile &F) {
       S = AttributedStmt::CreateEmpty(
         Context,
         /*NumAttrs*/Record[ASTStmtReader::NumStmtFields]);
+      break;
+
+    case STMT_OMP_HELLO_DIRECTIVE:
+      S = OMPHelloDirective::CreateEmpty(
+          Context, Record[ASTStmtReader::NumStmtFields], Empty);
       break;
 
     case STMT_IF:

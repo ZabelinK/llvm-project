@@ -241,6 +241,7 @@ def OMPDepobjDirective : StmtNode<OMPExecutableDirective>;
 def OMPScanDirective : StmtNode<OMPExecutableDirective>;
 def OMPOrderedDirective : StmtNode<OMPExecutableDirective>;
 def OMPAtomicDirective : StmtNode<OMPExecutableDirective>;
+def OMPHelloDirective : StmtNode<OMPExecutableDirective>;
 def OMPTargetDirective : StmtNode<OMPExecutableDirective>;
 def OMPTargetDataDirective : StmtNode<OMPExecutableDirective>;
 def OMPTargetEnterDataDirective : StmtNode<OMPExecutableDirective>;

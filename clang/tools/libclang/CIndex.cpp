@@ -2056,6 +2056,7 @@ public:
   void VisitOMPDepobjDirective(const OMPDepobjDirective *D);
   void VisitOMPScanDirective(const OMPScanDirective *D);
   void VisitOMPOrderedDirective(const OMPOrderedDirective *D);
+  void VisitOMPHelloDirective(const OMPHelloDirective *D);
   void VisitOMPAtomicDirective(const OMPAtomicDirective *D);
   void VisitOMPTargetDirective(const OMPTargetDirective *D);
   void VisitOMPTargetDataDirective(const OMPTargetDataDirective *D);
@@ -2931,6 +2932,10 @@ void EnqueueVisitor::VisitOMPScanDirective(const OMPScanDirective *D) {
 }
 
 void EnqueueVisitor::VisitOMPOrderedDirective(const OMPOrderedDirective *D) {
+  VisitOMPExecutableDirective(D);
+}
+
+void EnqueueVisitor::VisitOMPHelloDirective(const OMPHelloDirective *D) {
   VisitOMPExecutableDirective(D);
 }
 
@@ -5165,6 +5170,8 @@ CXString clang_getCursorKindSpelling(enum CXCursorKind Kind) {
     return cxstring::createRef("FieldDecl");
   case CXCursor_VarDecl:
     return cxstring::createRef("VarDecl");
+  case CXCursor_OMPHelloDirective:
+    return cxstring::createRef("OMPHelloDirective");
   case CXCursor_ParmDecl:
     return cxstring::createRef("ParmDecl");
   case CXCursor_ObjCInterfaceDecl:

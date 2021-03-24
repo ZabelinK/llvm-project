@@ -2503,6 +2503,34 @@ public:
   }
 };
 
+class OMPHelloDirective : public OMPExecutableDirective {
+ friend class ASTStmtReader;
+
+public:
+  OMPHelloDirective(SourceLocation StartLoc, SourceLocation EndLoc,
+                     unsigned NumClauses)
+      : OMPExecutableDirective(this, OMPHelloDirectiveClass,
+                               llvm::omp::OMPD_hello, StartLoc, EndLoc,
+                               NumClauses, 5) {}
+
+  explicit OMPHelloDirective(unsigned NumClauses)
+      : OMPExecutableDirective(this, OMPHelloDirectiveClass,
+                               llvm::omp::OMPD_ordered, SourceLocation(),
+                               SourceLocation(), NumClauses, 1) {}
+
+  static OMPHelloDirective* Create(const ASTContext &C,
+                                   SourceLocation StartLoc,
+                                   SourceLocation EndLoc,
+                                   ArrayRef<OMPClause *> Clauses);
+
+  static OMPHelloDirective *CreateEmpty(const ASTContext &C,
+        unsigned NumClauses, EmptyShell);
+
+  static bool classof(const Stmt *T) {
+    return T->getStmtClass() == OMPHelloDirectiveClass;
+  }
+};
+
 /// This represents '#pragma omp atomic' directive.
 ///
 /// \code

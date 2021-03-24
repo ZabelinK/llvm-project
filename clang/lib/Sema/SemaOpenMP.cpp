@@ -38,6 +38,8 @@
 #include "llvm/Frontend/OpenMP/OMPConstants.h"
 #include <set>
 
+#include <iostream>
+
 using namespace clang;
 using namespace llvm::omp;
 
@@ -3793,6 +3795,7 @@ void Sema::ActOnOpenMPRegionStart(OpenMPDirectiveKind DKind, Scope *CurScope) {
   case OMPD_for_simd:
   case OMPD_sections:
   case OMPD_section:
+  case OMPD_hello:
   case OMPD_single:
   case OMPD_master:
   case OMPD_critical:
@@ -5177,6 +5180,10 @@ StmtResult Sema::ActOnOpenMPExecutableDirective(
     break;
   case OMPD_atomic:
     Res = ActOnOpenMPAtomicDirective(ClausesWithImplicit, AStmt, StartLoc,
+                                     EndLoc);
+    break;
+  case OMPD_hello:
+    Res = ActOnOpenMPHelloDirective(ClausesWithImplicit, AStmt, StartLoc,
                                      EndLoc);
     break;
   case OMPD_teams:
@@ -9686,6 +9693,14 @@ bool OpenMPAtomicUpdateChecker::checkStatement(Stmt *S, unsigned DiagId,
     UpdateExpr = Update.get();
   }
   return ErrorFound != NoError;
+}
+
+StmtResult Sema::ActOnOpenMPHelloDirective(ArrayRef<OMPClause *> Clauses,
+                                            Stmt *AStmt,
+                                            SourceLocation StartLoc,
+                                            SourceLocation EndLoc) {
+  std::cout << "Hello!!!\n";
+  return OMPHelloDirective::Create(Context, StartLoc, EndLoc, Clauses);
 }
 
 StmtResult Sema::ActOnOpenMPAtomicDirective(ArrayRef<OMPClause *> Clauses,
