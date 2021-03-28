@@ -3497,10 +3497,6 @@ struct OmpClauseList {
   CharBlock source;
 };
 
-struct OmpHello {
-  CharBlock source;
-}
-
 // 2.7.2 SECTIONS
 // 2.11.2 PARALLEL SECTIONS
 struct OmpSectionsDirective {

@@ -2511,12 +2511,12 @@ public:
                      unsigned NumClauses)
       : OMPExecutableDirective(this, OMPHelloDirectiveClass,
                                llvm::omp::OMPD_hello, StartLoc, EndLoc,
-                               NumClauses, 5) {}
+                               NumClauses, 0) {}
 
   explicit OMPHelloDirective(unsigned NumClauses)
       : OMPExecutableDirective(this, OMPHelloDirectiveClass,
                                llvm::omp::OMPD_ordered, SourceLocation(),
-                               SourceLocation(), NumClauses, 1) {}
+                               SourceLocation(), NumClauses, 0) {}
 
   static OMPHelloDirective* Create(const ASTContext &C,
                                    SourceLocation StartLoc,

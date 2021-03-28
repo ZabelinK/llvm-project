@@ -1689,6 +1689,12 @@ Parser::DeclGroupPtrTy Parser::ParseOpenMPDeclarativeDirectiveWithExtDecl(
   }
 
   switch (DKind) {
+  case OMPD_hello: {
+    llvm::errs() << "hello =)\n";
+    ConsumeToken();
+    ConsumeAnnotationToken();
+    break;
+  }
   case OMPD_threadprivate: {
     ConsumeToken();
     DeclDirectiveListParserHelper Helper(this, DKind);
@@ -1980,7 +1986,6 @@ Parser::DeclGroupPtrTy Parser::ParseOpenMPDeclarativeDirectiveWithExtDecl(
   case OMPD_teams:
   case OMPD_cancellation_point:
   case OMPD_cancel:
-  case OMPD_hello:
   case OMPD_target_data:
   case OMPD_target_enter_data:
   case OMPD_target_exit_data:
@@ -2082,6 +2087,17 @@ Parser::ParseOpenMPDeclarativeOrExecutableDirective(ParsedStmtContext StmtCtx) {
 
   std::cout << (int) DKind << '\n';
   switch (DKind) {
+  case OMPD_hello: {
+    llvm::errs() <<"hello from ParseOpenMPDeclarativeOrExecutableDirective method =) \n";
+    ConsumeToken();
+    //ParseScope OMPDirectiveScope(this, ScopeFlags);
+    ///Actions.StartOpenMPDSABlock(DKind, DirName, Actions.getCurScope(), Loc);
+    ConsumeAnnotationToken();
+    Directive = Actions.ActOnOpenMPExecutableDirective(DKind, DirName, CancelRegion, Clauses, nullptr, Loc, EndLoc);
+    // Exit scope.
+    //Actions.EndOpenMPDSABlock(Directive.get());
+    //OMPDirectiveScope.Exit();
+  }
   case OMPD_threadprivate: {
     // FIXME: Should this be permitted in C++?
     if ((StmtCtx & ParsedStmtContext::AllowDeclarationsInC) ==
@@ -2231,8 +2247,7 @@ Parser::ParseOpenMPDeclarativeOrExecutableDirective(ParsedStmtContext StmtCtx) {
   case OMPD_target_teams_distribute:
   case OMPD_target_teams_distribute_parallel_for:
   case OMPD_target_teams_distribute_parallel_for_simd:
-  case OMPD_target_teams_distribute_simd:
-  case OMPD_hello: {
+  case OMPD_target_teams_distribute_simd: {
     // Special processing for flush and depobj clauses.
     Token ImplicitTok;
     bool ImplicitClauseAllowed = false;
