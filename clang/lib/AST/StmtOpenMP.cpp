@@ -836,6 +836,29 @@ OMPOrderedDirective *OMPOrderedDirective::CreateEmpty(const ASTContext &C,
   return new (Mem) OMPOrderedDirective(NumClauses);
 }
 
+OMPHelloDirective *OMPHelloDirective::Create(const ASTContext &C,
+                                               SourceLocation StartLoc,
+                                               SourceLocation EndLoc,
+                                               ArrayRef<OMPClause *> Clauses) {
+  unsigned Size =
+      llvm::alignTo(sizeof(OMPHelloDirective), alignof(OMPClause *));
+  void *Mem = C.Allocate(Size + sizeof(OMPClause *) * Clauses.size(),
+                         alignof(OMPHelloDirective));
+  auto *Dir = new (Mem) OMPHelloDirective(StartLoc, EndLoc, Clauses.size());
+  Dir->setClauses(Clauses);
+  return Dir;
+}
+
+OMPHelloDirective *OMPHelloDirective::CreateEmpty(const ASTContext &C,
+                                                    unsigned NumClauses,
+                                                    EmptyShell) {
+  unsigned Size =
+      llvm::alignTo(sizeof(OMPHelloDirective), alignof(OMPClause *));
+  void *Mem = C.Allocate(Size + sizeof(OMPClause *) * NumClauses,
+                         alignof(OMPHelloDirective));
+  return new (Mem) OMPHelloDirective(NumClauses);
+}
+
 OMPAtomicDirective *OMPAtomicDirective::Create(
     const ASTContext &C, SourceLocation StartLoc, SourceLocation EndLoc,
     ArrayRef<OMPClause *> Clauses, Stmt *AssociatedStmt, Expr *X, Expr *V,

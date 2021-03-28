@@ -1484,6 +1484,9 @@ def OMP_EndDoSimd : Directive<"end do simd"> {}
 def OMP_EndSections : Directive<"end sections"> {}
 def OMP_EndSingle : Directive<"end single"> {}
 def OMP_EndWorkshare : Directive<"end workshare"> {}
+def OMP_hello : Directive<"hello"> {
+  let isDefault = 1;
+}
 def OMP_Unknown : Directive<"unknown"> {
   let isDefault = 1;
 }

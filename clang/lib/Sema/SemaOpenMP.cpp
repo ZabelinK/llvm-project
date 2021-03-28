@@ -5171,6 +5171,9 @@ StmtResult Sema::ActOnOpenMPExecutableDirective(
            "No associated statement allowed for 'omp scan' directive");
     Res = ActOnOpenMPScanDirective(ClausesWithImplicit, StartLoc, EndLoc);
     break;
+  case OMPD_hello:
+    Res = ActOnOpenMPHelloDirective(ClausesWithImplicit, StartLoc, EndLoc);
+    break;
   case OMPD_ordered:
     Res = ActOnOpenMPOrderedDirective(ClausesWithImplicit, AStmt, StartLoc,
                                       EndLoc);
@@ -9350,6 +9353,13 @@ StmtResult Sema::ActOnOpenMPScanDirective(ArrayRef<OMPClause *> Clauses,
   }
   DSAStack->setParentHasScanDirective(StartLoc);
   return OMPScanDirective::Create(Context, StartLoc, EndLoc, Clauses);
+}
+
+StmtResult Sema::ActOnOpenMPHelloDirective(ArrayRef<OMPClause *> Clauses,
+                                          SourceLocation StartLoc,
+                                          SourceLocation EndLoc) {
+  llvm::errs() <<"Hello World\n";
+  return OMPHelloDirective::Create(Context, StartLoc, EndLoc, Clauses);
 }
 
 StmtResult Sema::ActOnOpenMPOrderedDirective(ArrayRef<OMPClause *> Clauses,
